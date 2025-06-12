@@ -161,11 +161,12 @@ export default {
     getEnvironment() {
         return wwLib.manager
             ? 'editor'
-            : window.location.host.includes( //TODO: add staging2 ?
-                  '-staging.' + (process.env.WW_ENV === 'staging' ? process.env.VUE_APP_PREVIEW_URL : '')
+            : window.location.host.includes(
+                  // TODO: add staging2 ?
+                  '-staging.' + (process.env.WW_ENV === 'staging' ? import.meta.env.VITE_APP_PREVIEW_URL : '')
               )
             ? 'staging'
-            : window.location.host.includes(process.env.VUE_APP_PREVIEW_URL)
+            : window.location.host.includes(import.meta.env.VITE_APP_PREVIEW_URL)
             ? 'preview'
             : 'production';
     },
