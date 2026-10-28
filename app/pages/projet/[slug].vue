@@ -5,7 +5,7 @@ import { SITE } from '#shared/utils/site'
 const route = useRoute()
 const { navigateWithLoader } = useSiteState()
 
-const { data: projects } = await useFetch<Project[]>('/api/content/projects', { key: 'projects', default: () => [] })
+const { data: projects } = await useFetch<Project[]>('/api/content/projects.json', { key: 'projects', default: () => [] })
 const project = computed(() => projects.value.find(p => p.slug === route.params.slug))
 
 if (!project.value) {

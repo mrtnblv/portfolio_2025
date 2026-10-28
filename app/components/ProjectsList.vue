@@ -2,7 +2,7 @@
 import type { Project } from '#shared/types/content'
 
 const props = defineProps<{ active: boolean }>()
-const { data: projects } = await useFetch<Project[]>('/api/content/projects', { key: 'projects', default: () => [] })
+const { data: projects } = await useFetch<Project[]>('/api/content/projects.json', { key: 'projects', default: () => [] })
 const { navigateWithLoader } = useSiteState()
 
 function open(event: MouseEvent, project: Project) {

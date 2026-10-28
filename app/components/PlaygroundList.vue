@@ -2,7 +2,7 @@
 import type { PlaygroundItem } from '#shared/types/content'
 import { PLAYGROUND_COLORS } from '#shared/utils/site'
 
-const { data: items } = await useFetch<PlaygroundItem[]>('/api/content/playground', {
+const { data: items } = await useFetch<PlaygroundItem[]>('/api/content/playground.json', {
   key: 'playground',
   default: () => [],
 })
