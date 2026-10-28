@@ -4,14 +4,14 @@ import { SOCIALS } from '#shared/utils/site'
 const props = defineProps<{ dimmed: boolean }>()
 const { menuOpen, formSubmitted } = useSiteState()
 
-const eyes = ref<HTMLElement[]>([])
+const eyes = ref<HTMLElement>()
 
 // The pupils follow the cursor (same maths as the original inline script).
 function onPointerMove(event: PointerEvent) {
   if (frame) return
   frame = requestAnimationFrame(() => {
     frame = 0
-    for (const eye of eyes.value) {
+    for (const eye of eyes.value?.querySelectorAll<HTMLElement>('.hero__eye') ?? []) {
       const rect = eye.getBoundingClientRect()
       const x = rect.left + rect.width / 2
       const y = rect.top + rect.height / 2
@@ -52,9 +52,9 @@ function onPanelClick(event: MouseEvent) {
 
     <div class="hero__logo">
       <img src="/images/cuicui.svg" alt="Logo MARTIN B. LEVY" width="180" height="180" />
-      <span class="hero__eyes" aria-hidden="true">
-        <span ref="eyes" class="hero__eye"><span class="hero__pupil" /></span>
-        <span ref="eyes" class="hero__eye"><span class="hero__pupil" /></span>
+      <span ref="eyes" class="hero__eyes" aria-hidden="true">
+        <span class="hero__eye"><span class="hero__pupil" /></span>
+        <span class="hero__eye"><span class="hero__pupil" /></span>
       </span>
       <span v-if="formSubmitted" class="hero__thanks" role="status">Merci pour<br />votre message !</span>
     </div>
