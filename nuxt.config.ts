@@ -41,8 +41,14 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    // Cloudflare Pages: polyfill Node built-ins instead of relying on the
+    // project's nodejs_compat flag (the worker only relays the contact form).
+    cloudflare: { nodeCompat: false },
     prerender: {
       crawlLinks: true,
+      // services.html rather than services/index.html, so hosts serve /services
+      // without redirecting to /services/.
+      autoSubfolderIndex: false,
       routes: [
         '/',
         '/services',

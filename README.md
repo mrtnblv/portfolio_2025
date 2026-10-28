@@ -20,8 +20,10 @@ npm run build          # pages prérendues + une fonction serveur pour /api/cont
 Le build prérend toutes les pages (`/`, `/services`, `/projets`, `/pl4ygr0und`, `/contact`, chaque `/projet/<slug>`,
 `/sitemap.xml`) et les réponses JSON des contenus. Seule la route `POST /api/contact` reste dynamique.
 
-Sur Netlify (ou Vercel), Nuxt détecte la plateforme et choisit le bon preset : commande `npm run build`,
-rien d'autre à configurer.
+Hébergement actuel : **Cloudflare Pages** (projet `portfolio-2025`). Nuxt détecte Pages et produit `dist/`
+avec un `_worker.js` pour `/api/contact`. Réglages du projet : commande `npm run build`, dossier de sortie `dist`.
+Node 22 est imposé par `.node-version`. Le flag `nodejs_compat` n'est pas nécessaire : les modules Node sont
+polyfillés au build (`nitro.cloudflare.nodeCompat: false`).
 
 ### Variables d'environnement
 

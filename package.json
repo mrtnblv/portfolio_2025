@@ -15,5 +15,8 @@
     "@fontsource/playfair-display": "5.3.0",
     "marked": "18.0.14",
     "nuxt": "4.6.0"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }
