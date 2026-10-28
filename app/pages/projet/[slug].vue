@@ -94,14 +94,13 @@ function back(event: MouseEvent) {
 
 .project-page__inner {
   display: flex;
-  flex-wrap: wrap;
   align-items: flex-start;
   column-gap: 40px;
   padding: 60px;
 }
 
 .project-page__left {
-  flex: 1 0 auto;
+  flex: none;
   width: 40%;
   align-self: stretch;
 }
@@ -134,10 +133,6 @@ function back(event: MouseEvent) {
   font-size: 14px;
   font-weight: 400;
   line-height: 24px;
-}
-
-.project-page__description :deep(p + p) {
-  margin-top: 6px;
 }
 
 .project-page__description :deep(a) {
@@ -222,7 +217,8 @@ function back(event: MouseEvent) {
 }
 
 .project-page__shots {
-  flex: 0 1 auto;
+  flex: 1 1 0;
+  min-width: 0;
   display: flex;
   flex-direction: column;
 }
@@ -232,25 +228,29 @@ function back(event: MouseEvent) {
 }
 
 .project-page__shot img {
-  max-width: 100%;
+  display: block;
+  width: 100%;
   height: auto;
 }
 
 @media (max-width: 991px) {
+  .project-page__inner {
+    flex-direction: column;
+  }
+
   .project-page__left {
     width: 70%;
-    min-width: 290px;
-    max-width: 100%;
   }
 
   .project-page__shots {
-    min-width: 290px;
-    max-width: 100%;
+    flex: none;
+    width: 100%;
   }
 }
 
 @media (max-width: 767px) {
   .project-page__inner {
+    row-gap: 40px;
     padding: 60px 0;
   }
 
@@ -260,10 +260,6 @@ function back(event: MouseEvent) {
 
   .project-page__sticky {
     padding: 0 20px;
-  }
-
-  .project-page__shots {
-    flex: 1 0 auto;
   }
 }
 </style>

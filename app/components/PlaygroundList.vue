@@ -122,7 +122,12 @@ const color = (index: number) => PLAYGROUND_COLORS[index % PLAYGROUND_COLORS.len
   }
 
   .playground__row {
+    column-gap: 24px;
     background-color: var(--cream);
+  }
+
+  .playground__title {
+    font-size: 16px;
   }
 
   .playground__tags {
