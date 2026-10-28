@@ -27,7 +27,8 @@ watch(
 
 const title = computed(() => (current.value ? `${current.value.title} | ${SITE.name}` : SITE.defaultTitle))
 const description = computed(() => current.value?.description ?? SITE.defaultDescription)
-const url = computed(() => `${SITE.url}${current.value ? `/${current.value.slug}` : '/'}`)
+// The sections are views of one page: they all point search engines to "/".
+const url = `${SITE.url}/`
 
 useSeoMeta({
   title,
