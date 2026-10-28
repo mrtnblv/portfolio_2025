@@ -3,6 +3,7 @@ import type { Project } from '#shared/types/content'
 
 const props = defineProps<{ active: boolean }>()
 const { data: projects } = await useFetch<Project[]>('/api/content/projects.json', { key: 'projects', default: () => [] })
+prerenderMedia(projects.value)
 const { navigateWithLoader } = useSiteState()
 
 function open(event: MouseEvent, project: Project) {
@@ -144,8 +145,14 @@ function open(event: MouseEvent, project: Project) {
   }
 
   .project {
-    width: auto;
+    width: 100%;
     max-width: 100%;
+    column-gap: 12px;
+  }
+
+  .project__title {
+    font-size: 18px;
+    line-height: 23px;
   }
 
   .project__thumb img {

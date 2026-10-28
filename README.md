@@ -35,6 +35,12 @@ polyfillés au build (`nitro.cloudflare.nodeCompat: false`).
 
 Aucun secret n'arrive dans le navigateur : Baserow et n8n ne sont appelés que côté serveur.
 
+### Images
+
+Les fichiers Baserow (couvertures, captures, logos) sont téléchargés pendant le build, redimensionnés à leur taille
+d'affichage avec `sharp`, convertis en WebP et servis depuis `/media` (voir `server/utils/media.ts`). Le site ne
+dépend donc plus des liens Baserow une fois construit.
+
 ### Mettre à jour les contenus
 
 Le site étant statique, une modification dans Baserow n'apparaît qu'après un nouveau build. Le plus simple :

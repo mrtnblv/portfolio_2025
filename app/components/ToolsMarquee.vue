@@ -2,6 +2,7 @@
 import type { Tool } from '#shared/types/content'
 
 const { data } = await useFetch<Tool[]>('/api/content/tools.json', { key: 'tools', default: () => [] })
+prerenderMedia(data.value)
 
 // Shuffled once per visit, after hydration so the server and client markup match.
 const tools = ref<Tool[]>(data.value)

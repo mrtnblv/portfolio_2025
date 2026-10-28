@@ -6,6 +6,7 @@ const route = useRoute()
 const { navigateWithLoader } = useSiteState()
 
 const { data: projects } = await useFetch<Project[]>('/api/content/projects.json', { key: 'projects', default: () => [] })
+prerenderMedia(projects.value)
 const project = computed(() => projects.value.find(p => p.slug === route.params.slug))
 
 if (!project.value) {
@@ -34,7 +35,7 @@ useSeoMeta({
   ogDescription: description,
   ogType: 'article',
   ogUrl: () => `${SITE.url}/projet/${project.value!.slug}`,
-  ogImage: () => project.value!.cover?.url ?? `${SITE.url}${SITE.image}`,
+  ogImage: () => project.value!.ogImage ?? `${SITE.url}${SITE.image}`,
 })
 useHead({ link: [{ rel: 'canonical', href: () => `${SITE.url}/projet/${project.value!.slug}` }] })
 
@@ -74,6 +75,8 @@ function back(event: MouseEvent) {
         <figure v-for="(shot, index) in project.shots" :key="shot.url" class="project-page__shot">
           <img
             :src="shot.url"
+            :srcset="shot.srcset"
+            sizes="(max-width: 991px) 100vw, 55vw"
             :width="shot.width"
             :height="shot.height"
             :alt="`Capture d'écran #${index + 1} du projet ${project.title}`"

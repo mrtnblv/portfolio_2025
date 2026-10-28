@@ -1,5 +1,7 @@
 export interface ContentImage {
   url: string
+  /** Larger versions, for `srcset`. */
+  srcset?: string
   width?: number
   height?: number
 }
@@ -15,6 +17,8 @@ export interface Project {
   /** HTML, rendered from the Baserow rich text at build time. */
   description: string
   cover: ContentImage | null
+  /** Absolute URL of a large version of the cover, for social cards. */
+  ogImage: string | null
   shots: ContentImage[]
 }
 

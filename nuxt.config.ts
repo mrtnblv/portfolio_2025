@@ -4,17 +4,18 @@ export default defineNuxtConfig({
   compatibilityDate: '2026-10-01',
   devtools: { enabled: false },
 
+  // Latin subsets only: every character of the site is in them.
   css: [
-    '@fontsource/kumbh-sans/300.css',
-    '@fontsource/kumbh-sans/400.css',
-    '@fontsource/kumbh-sans/500.css',
-    '@fontsource/kumbh-sans/600.css',
-    '@fontsource/kumbh-sans/700.css',
-    '@fontsource/kumbh-sans/800.css',
-    '@fontsource/kumbh-sans/900.css',
-    '@fontsource/geist-mono/300.css',
-    '@fontsource/geist-mono/600.css',
-    '@fontsource/playfair-display/400-italic.css',
+    '@fontsource/kumbh-sans/latin-300.css',
+    '@fontsource/kumbh-sans/latin-400.css',
+    '@fontsource/kumbh-sans/latin-500.css',
+    '@fontsource/kumbh-sans/latin-600.css',
+    '@fontsource/kumbh-sans/latin-700.css',
+    '@fontsource/kumbh-sans/latin-800.css',
+    '@fontsource/kumbh-sans/latin-900.css',
+    '@fontsource/geist-mono/latin-300.css',
+    '@fontsource/geist-mono/latin-600.css',
+    '@fontsource/playfair-display/latin-400-italic.css',
     '~/assets/css/main.css',
   ],
 
@@ -43,7 +44,12 @@ export default defineNuxtConfig({
   nitro: {
     // Cloudflare Pages: polyfill Node built-ins instead of relying on the
     // project's nodejs_compat flag (the worker only relays the contact form).
-    cloudflare: { nodeCompat: false },
+    cloudflare: {
+      nodeCompat: false,
+      // Folders of static files in one rule each: Pages accepts 100 rules at most.
+      pages: { routes: { exclude: ['/media/*', '/api/content/*'] } },
+    },
+    handlers: [{ route: '/media/**', handler: '~~/server/media.ts', env: 'prerender' }],
     prerender: {
       crawlLinks: true,
       // services.html rather than services/index.html, so hosts serve /services

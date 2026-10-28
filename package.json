@@ -14,7 +14,8 @@
     "@fontsource/kumbh-sans": "5.3.0",
     "@fontsource/playfair-display": "5.3.0",
     "marked": "18.0.14",
-    "nuxt": "4.6.0"
+    "nuxt": "4.6.0",
+    "sharp": "^0.35.5"
   },
   "engines": {
     "node": ">=22"

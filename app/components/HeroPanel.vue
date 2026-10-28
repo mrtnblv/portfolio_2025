@@ -59,6 +59,12 @@ function onPanelClick(event: MouseEvent) {
       <span v-if="formSubmitted" class="hero__thanks" role="status">Merci pour<br />votre message !</span>
     </div>
 
+    <!-- The name comes first in the document (h1 before h2), CSS order puts it back at the bottom. -->
+    <div class="hero__signature">
+      <p class="hero__role">Product Builder<br />Creative Developer</p>
+      <h1 class="hero__name">Martin B. Levy</h1>
+    </div>
+
     <div class="hero__intro">
       <h2 class="hero__title">Façonnons ensemble votre projet digital.</h2>
       <p class="hero__text">
@@ -68,11 +74,6 @@ function onPanelClick(event: MouseEvent) {
       <p class="hero__text">Depuis Marseille, je travaille partout en France.</p>
       <p class="hero__text">Rencontrons-nous sans plus attendre !</p>
       <NuxtLink to="/contact" class="pill hero__cta">Démarrer un projet</NuxtLink>
-    </div>
-
-    <div class="hero__signature">
-      <p class="hero__role">Product Builder<br />Creative Developer</p>
-      <h1 class="hero__name">Martin B. Levy</h1>
     </div>
 
     <ul class="hero__socials">
@@ -251,6 +252,7 @@ function onPanelClick(event: MouseEvent) {
 }
 
 .hero__signature {
+  order: 1;
   align-self: flex-end;
   display: flex;
   flex-direction: column;
@@ -281,6 +283,7 @@ function onPanelClick(event: MouseEvent) {
 }
 
 .hero__socials {
+  order: 2;
   position: absolute;
   bottom: 60px;
   left: 60px;

@@ -1,4 +1,5 @@
 import { marked } from 'marked'
+import { SITE } from '#shared/utils/site'
 import type { ContentImage, PlaygroundItem, Project, Tool } from '#shared/types/content'
 
 // Baserow is only queried at build time (prerender). The token never reaches
@@ -48,15 +49,27 @@ function list(value: unknown): string[] {
   return value.map(text).filter(Boolean)
 }
 
-function images(value: unknown): ContentImage[] {
+/**
+ * Baserow files at the widths they are displayed at: the first one is `url`,
+ * all of them make the `srcset`. The intrinsic size keeps the aspect ratio.
+ */
+function images(value: unknown, widths: number[]): ContentImage[] {
   if (!Array.isArray(value)) return []
   return value
     .filter((file): file is Row => !!file && typeof file === 'object' && typeof (file as Row).url === 'string')
-    .map(file => ({
-      url: file.url as string,
-      width: typeof file.image_width === 'number' ? file.image_width : undefined,
-      height: typeof file.image_height === 'number' ? file.image_height : undefined,
-    }))
+    .map(file => {
+      const src = file.url as string
+      return {
+        url: mediaUrl(src, widths[0]),
+        srcset: widths.length > 1 ? widths.map(w => `${mediaUrl(src, w)} ${w}w`).join(', ') : undefined,
+        width: typeof file.image_width === 'number' ? file.image_width : undefined,
+        height: typeof file.image_height === 'number' ? file.image_height : undefined,
+      }
+    })
+}
+
+function absolute(url: string): string {
+  return url.startsWith('/') ? `${SITE.url}${url}` : url
 }
 
 function html(value: unknown): string {
@@ -75,13 +88,16 @@ export function toProject(row: Row): Project {
     role: text(row.Role_text),
     technique: text(row.Technique_text),
     description: html(row.Description_text),
-    cover: images(row.Cover)[0] ?? null,
-    shots: images(row.Shots),
+    // Thumbnail of 150px (130px on mobile), at 2x.
+    cover: images(row.Cover, [300])[0] ?? null,
+    ogImage: images(row.Cover, [1200]).map(image => absolute(image.url))[0] ?? null,
+    // Up to 764px wide (tablet), at 1x and 2x.
+    shots: images(row.Shots, [800, 1600]),
   }
 }
 
 export function toTool(row: Row): Tool {
-  return { name: text(row.Nom), logo: images(row.Logo)[0] ?? null }
+  return { name: text(row.Nom), logo: images(row.Logo, [80])[0] ?? null }
 }
 
 export function toPlaygroundItem(row: Row): PlaygroundItem {
